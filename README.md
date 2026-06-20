@@ -18,23 +18,6 @@ https://github.com/ilcommm/Max2iMessage
 
 Скачивать исходники на NAS не нужно.
 
-## Что такое GHCR
-
-`GHCR` - это Docker Registry от GitHub.
-
-То есть GitHub хранит готовый Docker-образ проекта, а `docker-compose.yml` скачивает его строкой:
-
-```yaml
-image: ghcr.io/your-github-login/max2ntfy:latest
-```
-
-После публикации репозитория нужно заменить `your-github-login` на имя владельца GitHub-репозитория. Например:
-
-```yaml
-image: ghcr.io/ilnur/max2ntfy:latest
-```
-
-Чтобы все могли скачать образ без логина, GitHub Package нужно сделать публичным.
 
 ## Папки на NAS
 
