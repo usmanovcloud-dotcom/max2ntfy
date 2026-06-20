@@ -1,0 +1,13 @@
+﻿{
+  "name": "max2ntfy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --check src/index.js"
+  },
+  "dependencies": {
+    "playwright": "1.54.0"
+  }
+}
+

@@ -1,0 +1,56 @@
+services:
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    command:
+      - serve
+      - --cache-file
+      - /var/cache/ntfy/cache.db
+    environment:
+      TZ: Asia/Yekaterinburg
+      NTFY_BASE_URL: https://ntfy.example.com
+      NTFY_BEHIND_PROXY: "true"
+      NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
+      NTFY_AUTH_FILE: /var/cache/ntfy/auth.db
+      NTFY_AUTH_DEFAULT_ACCESS: deny-all
+      NTFY_ENABLE_LOGIN: "true"
+    volumes:
+      - /volume1/docker/max2ntfy/ntfy/cache:/var/cache/ntfy:rw
+    ports:
+      - "8099:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --tries=1 http://localhost:80/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    init: true
+
+  max2ntfy:
+    image: ghcr.io/your-github-login/max2ntfy:latest
+    depends_on:
+      ntfy:
+        condition: service_healthy
+    environment:
+      MAX_URL: https://web.max.ru
+      TARGET_TYPE: ntfy
+      TARGET_URL: http://ntfy/max_user
+      TARGET_USERNAME: maxbridge
+      TARGET_PASSWORD: CHANGE_ME_BRIDGE_PASSWORD
+      NTFY_TITLE: MAX
+      NTFY_PRIORITY: high
+      NTFY_TAGS: speech_balloon
+      SKIP_OWN_MESSAGES: "true"
+      SKIP_MUTED_CHATS: "true"
+      ACCOUNT_NAME: user
+      PROFILE_DIR: /data/profile
+      STATE_DIR: /data/state
+      DEDUP_FILE: /data/state/dedup.json
+      LOGIN_SCREENSHOT_FILE: /data/state/login.png
+      PORT: 3000
+      HEADLESS: "true"
+    volumes:
+      - /volume1/docker/max2ntfy/accounts/user:/data:rw
+    ports:
+      - "3010:3000"
+    restart: unless-stopped
