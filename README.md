@@ -45,7 +45,6 @@ https://github.com/ilcommm/Max2iMessage
 Минимум:
 
 ```yaml
-image: ghcr.io/your-github-login/max2ntfy:latest
 NTFY_BASE_URL: https://ntfy.example.com
 TARGET_PASSWORD: CHANGE_ME_BRIDGE_PASSWORD
 TARGET_URL: http://ntfy/max_user
