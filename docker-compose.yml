@@ -27,7 +27,7 @@ services:
     init: true
 
   max2ntfy:
-    image: ghcr.io/your-github-login/max2ntfy:latest
+    image: ghcr.io/usmanovcloud-dotcom/max2ntfy:latest
     depends_on:
       ntfy:
         condition: service_healthy
